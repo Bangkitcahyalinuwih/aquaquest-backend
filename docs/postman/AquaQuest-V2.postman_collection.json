@@ -1,0 +1,1913 @@
+{
+  "info": {
+    "name": "AquaQuest API v1",
+    "description": "Kontrak API AquaQuest v2. Impor bersama environment 'AquaQuest Local'. Jalankan Login dulu agar token tersimpan otomatis.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 201\", () => pm.response.to.have.status(201));",
+                  "const json = pm.response.json();",
+                  "pm.test(\"token ada\", () => pm.expect(json.data.token).to.be.a(\"string\"));",
+                  "pm.environment.set(\"token\", json.data.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Budi Uji\",\n  \"email\": \"budi.uji@example.com\",\n  \"password\": \"rahasia123\",\n  \"password_confirmation\": \"rahasia123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Login (user demo)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));",
+                  "const json = pm.response.json();",
+                  "pm.test(\"token ada\", () => pm.expect(json.data.token).to.be.a(\"string\"));",
+                  "pm.environment.set(\"token\", json.data.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"demo@aquaquest.test\",\n  \"password\": \"password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Login (admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));",
+                  "const json = pm.response.json();",
+                  "pm.test(\"token ada\", () => pm.expect(json.data.token).to.be.a(\"string\"));",
+                  "pm.environment.set(\"token\", json.data.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@aquaquest.test\",\n  \"password\": \"password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Login gagal (harus 422)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 422\", () => pm.response.to.have.status(422));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"demo@aquaquest.test\",\n  \"password\": \"salah\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Me",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"ada role\", () => pm.expect(pm.response.json().data.role).to.be.oneOf([\"user\",\"admin\"]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "me"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 204\", () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "logout"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Publik",
+      "item": [
+        {
+          "name": "Beranda",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"ada statistik\", () => pm.expect(pm.response.json().data.statistik).to.be.an(\"object\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/beranda",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "beranda"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Biota - daftar",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));",
+                  "const j = pm.response.json();",
+                  "pm.test(\"ada data dan meta\", () => { pm.expect(j.data).to.be.an(\"array\"); pm.expect(j.meta.current_page).to.be.a(\"number\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/biota",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "biota"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "penyu",
+                  "disabled": true
+                },
+                {
+                  "key": "kategori",
+                  "value": "Ikan",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Biota - kategori",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/biota/kategori",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "biota",
+                "kategori"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Biota - detail",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/biota/{{slug}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "biota",
+                "{{slug}}"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Biota - detail tidak ada (404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 404\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/biota/tidak-ada-slug",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "biota",
+                "tidak-ada-slug"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Edukasi - daftar",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/edukasi",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "edukasi"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "laut",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Edukasi - detail",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/edukasi/{{slug_edukasi}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "edukasi",
+                "{{slug_edukasi}}"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Leaderboard",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/leaderboard",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "leaderboard"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pengguna (login)",
+      "item": [
+        {
+          "name": "Dashboard",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dashboard"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Koleksi kartu",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/koleksi",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "koleksi"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Ubah profil",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/profil",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "profil"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nama Baru\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Kuis - mulai",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));",
+                  "const j = pm.response.json();",
+                  "pm.expect(j.data.soal[0]).to.not.have.property(\"jawaban_benar\");",
+                  "pm.environment.set(\"game_id\", j.data.game_id);",
+                  "pm.environment.set(\"soal_id\", j.data.soal[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/kuis/mulai",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "kuis",
+                "mulai"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Kuis - jawab",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/kuis/{{game_id}}/jawab",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "kuis",
+                "{{game_id}}",
+                "jawab"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"soal_id\": \"{{soal_id}}\",\n  \"pilihan\": \"a\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Kuis - selesai",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/kuis/{{game_id}}/selesai",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "kuis",
+                "{{game_id}}",
+                "selesai"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin (role admin)",
+      "item": [
+        {
+          "name": "Dashboard admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/dashboard",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "dashboard"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Biota",
+          "item": [
+            {
+              "name": "Biota - daftar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/biota",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "biota"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Biota - tambah (multipart)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 201\", () => pm.response.to.have.status(201));",
+                      "pm.environment.set(\"id\", pm.response.json().data.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/biota",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "biota"
+                  ]
+                },
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "nama",
+                      "value": "Biota Uji",
+                      "type": "text"
+                    },
+                    {
+                      "key": "nama_latin",
+                      "value": "Testus uji",
+                      "type": "text"
+                    },
+                    {
+                      "key": "kategori",
+                      "value": "Ikan",
+                      "type": "text"
+                    },
+                    {
+                      "key": "deskripsi",
+                      "value": "Deskripsi uji",
+                      "type": "text"
+                    },
+                    {
+                      "key": "habitat",
+                      "value": "Laut dangkal",
+                      "type": "text"
+                    },
+                    {
+                      "key": "status_konservasi",
+                      "value": "LC",
+                      "type": "text"
+                    },
+                    {
+                      "key": "latitude",
+                      "value": "-5.77",
+                      "type": "text"
+                    },
+                    {
+                      "key": "longitude",
+                      "value": "105.17",
+                      "type": "text"
+                    },
+                    {
+                      "key": "gambar",
+                      "type": "file",
+                      "src": []
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Biota - detail",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/biota/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "biota",
+                    "{{id}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Biota - ubah (POST + _method=PUT)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/biota/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "biota",
+                    "{{id}}"
+                  ]
+                },
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "_method",
+                      "value": "PUT",
+                      "type": "text"
+                    },
+                    {
+                      "key": "nama",
+                      "value": "Biota Uji",
+                      "type": "text"
+                    },
+                    {
+                      "key": "nama_latin",
+                      "value": "Testus uji",
+                      "type": "text"
+                    },
+                    {
+                      "key": "kategori",
+                      "value": "Ikan",
+                      "type": "text"
+                    },
+                    {
+                      "key": "deskripsi",
+                      "value": "Deskripsi uji",
+                      "type": "text"
+                    },
+                    {
+                      "key": "habitat",
+                      "value": "Laut dangkal",
+                      "type": "text"
+                    },
+                    {
+                      "key": "status_konservasi",
+                      "value": "LC",
+                      "type": "text"
+                    },
+                    {
+                      "key": "latitude",
+                      "value": "-5.77",
+                      "type": "text"
+                    },
+                    {
+                      "key": "longitude",
+                      "value": "105.17",
+                      "type": "text"
+                    },
+                    {
+                      "key": "gambar",
+                      "type": "file",
+                      "src": []
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Biota - hapus",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 204\", () => pm.response.to.have.status(204));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/biota/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "biota",
+                    "{{id}}"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Edukasi",
+          "item": [
+            {
+              "name": "Edukasi - daftar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/edukasi",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "edukasi"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Edukasi - tambah (multipart)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 201\", () => pm.response.to.have.status(201));",
+                      "pm.environment.set(\"id\", pm.response.json().data.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/edukasi",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "edukasi"
+                  ]
+                },
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "judul",
+                      "value": "Judul Uji",
+                      "type": "text"
+                    },
+                    {
+                      "key": "isi",
+                      "value": "Isi artikel uji",
+                      "type": "text"
+                    },
+                    {
+                      "key": "biota_id",
+                      "value": "",
+                      "type": "text"
+                    },
+                    {
+                      "key": "gambar",
+                      "type": "file",
+                      "src": []
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Edukasi - detail",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/edukasi/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "edukasi",
+                    "{{id}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Edukasi - ubah (POST + _method=PUT)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/edukasi/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "edukasi",
+                    "{{id}}"
+                  ]
+                },
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "_method",
+                      "value": "PUT",
+                      "type": "text"
+                    },
+                    {
+                      "key": "judul",
+                      "value": "Judul Uji",
+                      "type": "text"
+                    },
+                    {
+                      "key": "isi",
+                      "value": "Isi artikel uji",
+                      "type": "text"
+                    },
+                    {
+                      "key": "biota_id",
+                      "value": "",
+                      "type": "text"
+                    },
+                    {
+                      "key": "gambar",
+                      "type": "file",
+                      "src": []
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Edukasi - hapus",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 204\", () => pm.response.to.have.status(204));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/edukasi/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "edukasi",
+                    "{{id}}"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Soal",
+          "item": [
+            {
+              "name": "Soal - daftar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/soal",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "soal"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Soal - tambah (multipart)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 201\", () => pm.response.to.have.status(201));",
+                      "pm.environment.set(\"id\", pm.response.json().data.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/soal",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "soal"
+                  ]
+                },
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "tipe",
+                      "value": "teks",
+                      "type": "text"
+                    },
+                    {
+                      "key": "pertanyaan",
+                      "value": "Pertanyaan uji?",
+                      "type": "text"
+                    },
+                    {
+                      "key": "opsi_a",
+                      "value": "A",
+                      "type": "text"
+                    },
+                    {
+                      "key": "opsi_b",
+                      "value": "B",
+                      "type": "text"
+                    },
+                    {
+                      "key": "opsi_c",
+                      "value": "C",
+                      "type": "text"
+                    },
+                    {
+                      "key": "opsi_d",
+                      "value": "D",
+                      "type": "text"
+                    },
+                    {
+                      "key": "jawaban_benar",
+                      "value": "a",
+                      "type": "text"
+                    },
+                    {
+                      "key": "poin",
+                      "value": "10",
+                      "type": "text"
+                    },
+                    {
+                      "key": "biota_id",
+                      "value": "",
+                      "type": "text"
+                    },
+                    {
+                      "key": "gambar",
+                      "type": "file",
+                      "src": []
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Soal - detail",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/soal/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "soal",
+                    "{{id}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Soal - ubah (POST + _method=PUT)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/soal/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "soal",
+                    "{{id}}"
+                  ]
+                },
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "_method",
+                      "value": "PUT",
+                      "type": "text"
+                    },
+                    {
+                      "key": "tipe",
+                      "value": "teks",
+                      "type": "text"
+                    },
+                    {
+                      "key": "pertanyaan",
+                      "value": "Pertanyaan uji?",
+                      "type": "text"
+                    },
+                    {
+                      "key": "opsi_a",
+                      "value": "A",
+                      "type": "text"
+                    },
+                    {
+                      "key": "opsi_b",
+                      "value": "B",
+                      "type": "text"
+                    },
+                    {
+                      "key": "opsi_c",
+                      "value": "C",
+                      "type": "text"
+                    },
+                    {
+                      "key": "opsi_d",
+                      "value": "D",
+                      "type": "text"
+                    },
+                    {
+                      "key": "jawaban_benar",
+                      "value": "a",
+                      "type": "text"
+                    },
+                    {
+                      "key": "poin",
+                      "value": "10",
+                      "type": "text"
+                    },
+                    {
+                      "key": "biota_id",
+                      "value": "",
+                      "type": "text"
+                    },
+                    {
+                      "key": "gambar",
+                      "type": "file",
+                      "src": []
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Soal - hapus",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 204\", () => pm.response.to.have.status(204));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/soal/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "soal",
+                    "{{id}}"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Kartu",
+          "item": [
+            {
+              "name": "Kartu - daftar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/kartu",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "kartu"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Kartu - tambah (multipart)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 201\", () => pm.response.to.have.status(201));",
+                      "pm.environment.set(\"id\", pm.response.json().data.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/kartu",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "kartu"
+                  ]
+                },
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "biota_id",
+                      "value": "1",
+                      "type": "text"
+                    },
+                    {
+                      "key": "nama",
+                      "value": "Kartu Uji",
+                      "type": "text"
+                    },
+                    {
+                      "key": "xp_syarat",
+                      "value": "100",
+                      "type": "text"
+                    },
+                    {
+                      "key": "gambar",
+                      "type": "file",
+                      "src": []
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Kartu - detail",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/kartu/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "kartu",
+                    "{{id}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Kartu - ubah (POST + _method=PUT)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/kartu/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "kartu",
+                    "{{id}}"
+                  ]
+                },
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "_method",
+                      "value": "PUT",
+                      "type": "text"
+                    },
+                    {
+                      "key": "biota_id",
+                      "value": "1",
+                      "type": "text"
+                    },
+                    {
+                      "key": "nama",
+                      "value": "Kartu Uji",
+                      "type": "text"
+                    },
+                    {
+                      "key": "xp_syarat",
+                      "value": "100",
+                      "type": "text"
+                    },
+                    {
+                      "key": "gambar",
+                      "type": "file",
+                      "src": []
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Kartu - hapus",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"status 204\", () => pm.response.to.have.status(204));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/kartu/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "kartu",
+                    "{{id}}"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
