@@ -30,7 +30,7 @@ class PenggunaSeeder extends Seeder
         ];
 
         foreach ($pemain as $i => [$nama, $xp]) {
-            $this->buat($nama, 'pemain' . ($i + 1) . '@aquaquest.test', 'user', $xp);
+            $this->buat($nama, 'pemain'.($i + 1).'@aquaquest.test', 'user', $xp);
         }
     }
 

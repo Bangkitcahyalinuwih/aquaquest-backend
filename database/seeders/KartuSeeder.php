@@ -17,7 +17,7 @@ class KartuSeeder extends Seeder
             Kartu::updateOrCreate(
                 ['biota_id' => $biota->id],
                 [
-                    'nama' => 'Kartu ' . $biota->nama,
+                    'nama' => 'Kartu '.$biota->nama,
                     'gambar' => $biota->gambar ?? '',
                     'xp_syarat' => $ambang[$i] ?? 1000,
                 ]

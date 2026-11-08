@@ -21,7 +21,7 @@ class SoalKuisFactory extends Factory
         return [
             'biota_id' => Biota::inRandomOrder()->first()?->id,
             'tipe' => 'teks',
-            'pertanyaan' => fake()->sentence() . '?',
+            'pertanyaan' => fake()->sentence().'?',
             'gambar' => null,
             'opsi_a' => fake()->word(),
             'opsi_b' => fake()->word(),

@@ -20,7 +20,7 @@ class KartuFactory extends Factory
     {
         return [
             'biota_id' => Biota::factory(),
-            'nama' => 'Kartu ' . fake()->words(2, true),
+            'nama' => 'Kartu '.fake()->words(2, true),
             'gambar' => $this->faker->imageUrl(640, 480, 'animals', true),
             'xp_syarat' => fake()->randomElement([50, 100, 150, 200, 250]),
         ];

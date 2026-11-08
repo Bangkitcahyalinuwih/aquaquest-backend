@@ -48,7 +48,7 @@ class SoalKuisSeeder extends Seeder
         $semuaNama = Biota::pluck('nama');
 
         foreach (Biota::whereNotNull('gambar')->take(5)->get() as $biota) {
-            $pengecoh = $semuaNama->reject(fn($n) => $n === $biota->nama)->shuffle()->take(3)->values()->all();
+            $pengecoh = $semuaNama->reject(fn ($n) => $n === $biota->nama)->shuffle()->take(3)->values()->all();
 
             $this->buatSoal($biota->id, 'gambar', 'Hewan laut apakah yang terlihat pada gambar ini?', $biota->gambar, $biota->nama, $pengecoh);
         }

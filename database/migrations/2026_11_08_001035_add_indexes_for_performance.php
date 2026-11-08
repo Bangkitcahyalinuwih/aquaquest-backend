@@ -27,8 +27,8 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('game_history', fn(Blueprint $table) => $table->dropIndex('gh_user_status_selesai_idx'));
-        Schema::table('biota', fn(Blueprint $table) => $table->dropIndex(['kategori']));
-        Schema::table('kartu', fn(Blueprint $table) => $table->dropIndex(['xp_syarat']));
+        Schema::table('game_history', fn (Blueprint $table) => $table->dropIndex('gh_user_status_selesai_idx'));
+        Schema::table('biota', fn (Blueprint $table) => $table->dropIndex(['kategori']));
+        Schema::table('kartu', fn (Blueprint $table) => $table->dropIndex(['xp_syarat']));
     }
 };

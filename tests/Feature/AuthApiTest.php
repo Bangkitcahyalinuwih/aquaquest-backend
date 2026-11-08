@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\User;
-use Laravel\Sanctum\Sanctum;
 
 test('pengguna dapat mendaftar dan menerima token', function () {
     $res = $this->postJson('/api/v1/auth/register', [
