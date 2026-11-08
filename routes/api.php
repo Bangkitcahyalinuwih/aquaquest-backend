@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BiotaController;
 use App\Http\Controllers\Api\EdukasiController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\BerandaController;
 
 Route::prefix('v1')->group(function () {
     // ---- Auth (Bangkit) ----
@@ -21,7 +22,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/biota/{biota:slug}', [BiotaController::class, 'show']);
     Route::get('/edukasi', [EdukasiController::class, 'index']);
     Route::get('/edukasi/{konten:slug}', [EdukasiController::class, 'show']);
-
+    Route::get('/beranda', [BerandaController::class, 'index']);
     // ---- Pengguna: kuis, dashboard, koleksi, profil (Bangkit) ----
 
     // ---- Admin (Dillakuusayang) ----
