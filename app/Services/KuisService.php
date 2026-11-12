@@ -39,7 +39,9 @@ class KuisService
     public function soalUntukSesi(GameHistory $game): Collection
     {
         return SoalKuis::whereIn('id', $game->soal_ids)
-            ->get(['id', 'tipe', 'pertanyaan', 'gambar', 'opsi_a', 'opsi_b', 'opsi_c', 'opsi_d']);
+            ->get(['id', 'tipe', 'pertanyaan', 'gambar', 'opsi_a', 'opsi_b', 'opsi_c', 'opsi_d'])
+            ->sortBy(fn ($soal) => array_search($soal->id, $game->soal_ids))
+            ->values();
     }
 
     public function jawab(GameHistory $game, int $soalId, string $pilihan): array
@@ -92,11 +94,7 @@ class KuisService
             }
         }
 
-        $sudahMainHariIni = GameHistory::where('user_id', $game->user_id)
-            ->where('status', 'selesai')
-            ->whereDate('selesai_at', today())
-            ->where('id', '!=', $game->id)
-            ->exists();
+        $sudahMainHariIni = GameHistory::sudahSelesaiHariIni($game->user_id, $game->id);
 
         $xpDikreditkan = $sudahMainHariIni ? 0 : $poinDihasilkan;
 

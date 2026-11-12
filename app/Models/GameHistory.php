@@ -31,6 +31,16 @@ class GameHistory extends Model
         'jawaban' => 'array',
     ];
 
+    public static function sudahSelesaiHariIni(int $userId, ?int $kecualiId = null): bool
+    {
+        return static::query()
+            ->where('user_id', $userId)
+            ->where('status', 'selesai')
+            ->whereDate('selesai_at', today())
+            ->when($kecualiId, fn ($query) => $query->where('id', '!=', $kecualiId))
+            ->exists();
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
