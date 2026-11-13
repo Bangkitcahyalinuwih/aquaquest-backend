@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BiotaController;
 use App\Http\Controllers\Api\EdukasiController;
 use App\Http\Controllers\Api\KoleksiController;
 use App\Http\Controllers\Api\KuisController;
+use App\Http\Controllers\Api\ProfilController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -41,5 +42,6 @@ Route::prefix('v1')->group(function () {
 
         // koleksi dan profil (Bangkit, B6 dan B7)
         Route::get('/koleksi', [KoleksiController::class, 'index']);
+        Route::put('/profil', [ProfilController::class, 'update']);
     });
 });
