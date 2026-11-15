@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BiotaController;
 use App\Http\Controllers\Api\EdukasiController;
 use App\Http\Controllers\Api\KoleksiController;
 use App\Http\Controllers\Api\KuisController;
+use App\Http\Controllers\Api\LeaderboardController;
 use App\Http\Controllers\Api\ProfilController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/edukasi', [EdukasiController::class, 'index']);
     Route::get('/edukasi/{konten:slug}', [EdukasiController::class, 'show']);
     Route::get('/beranda', [BerandaController::class, 'index']);
+    Route::get('/leaderboard', [LeaderboardController::class, 'index']);
 
     // ---- Pengguna: kuis, dashboard, koleksi, profil (Bangkit) ----
     Route::middleware('auth:sanctum')->group(function () {
