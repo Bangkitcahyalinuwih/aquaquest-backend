@@ -151,7 +151,7 @@ Menyelesaikan sesi dua kali: **422**.
 Kartu diurutkan menurut `xp_syarat`. Tampilan kartu terkunci (menyembunyikan nama) diatur frontend.
 
 Aturan permainan (tidak berubah dari v1): 5 soal acak, 5 menit, XP = jumlah poin soal benar, hanya sesi selesai
-pertama setiap hari yang menambah XP, `level = floor(total_xp / 100) + 1`, kartu terbuka otomatis saat XP mencapai syaratnya.
+pertama setiap hari yang menambah XP, `level = floor[[Projects/AquaQuest-V2/v2-minggu-3/1-bangkit/guide]](total_xp / 100) + 1`, kartu terbuka otomatis saat XP mencapai syaratnya.
 
 ## 7. Endpoint admin (role `admin`, selain itu 403)
 
@@ -160,13 +160,18 @@ Semua memakai **`id` numerik**, bukan slug. Daftar dipaginasi 10 per halaman.
 | Modul | Endpoint | Isi request (`multipart/form-data`) |
 |---|---|---|
 | Dashboard | `GET /admin/dashboard` | |
-| Biota | `GET/POST /admin/biota`, `GET/POST(_method=PUT)/DELETE /admin/biota/{id}` | `nama`*, `nama_latin`, `kategori`*, `deskripsi`*, `habitat`, `status_konservasi`, `latitude`, `longitude`, `gambar` |
+| Biota | `GET/POST /admin/biota`, `GET /admin/biota/opsi`, `GET/POST(_method=PUT)/DELETE /admin/biota/{id}` | `nama`*, `nama_latin`, `kategori`*, `deskripsi`*, `habitat`, `status_konservasi`, `latitude`, `longitude`, `gambar` |
 | Edukasi | `/admin/edukasi` (pola sama) | `judul`*, `isi`*, `biota_id` (boleh kosong), `gambar` |
 | Soal | `/admin/soal` (pola sama) | `tipe`* (`teks`/`gambar`), `pertanyaan`*, `opsi_a`..`opsi_d`*, `jawaban_benar`* (`a`-`d`), `poin`* (1-100), `biota_id`, `gambar` (wajib bila tipe `gambar` dan belum ada) |
 | Kartu | `/admin/kartu` (pola sama) | `biota_id`* (unik), `nama`*, `xp_syarat`*, `gambar` (wajib saat tambah) |
 
 (* = wajib.) Respons tambah **201** dan ubah **200** berisi `{ "data": objek }` dengan field `id` dan seluruh field di atas
-serta `gambar_url`. Hapus **204**. Validasi gagal **422**.
+serta `gambar_url`. Respons admin **edukasi**, **soal**, dan **kartu** juga memuat objek `"biota": { "id": 1, "slug": "penyu-hijau", "nama": "Penyu Hijau" }` atau `null` selain `biota_id`. Hapus **204**. Validasi gagal **422**.
+
+`GET /admin/biota/opsi` (opsional `?tanpa_kartu=1` untuk menyaring biota yang belum punya kartu) → **200**
+```json
+{ "data": [ { "id": 1, "nama": "Penyu Hijau" } ] }
+```
 
 `GET /admin/dashboard` → **200**
 ```json
@@ -182,7 +187,7 @@ serta `gambar_url`. Hapus **204**. Validasi gagal **422**.
 | Auth, profil | 1 (auth), 2 (profil) | Bangkit |
 | Beranda, biota, edukasi | 1 | Dila |
 | Kuis, dashboard, koleksi, leaderboard | 2 | Bangkit (kuis, koleksi), Dila (leaderboard, dashboard) |
-| Admin | 3 | Dila |
+| Admin | 3 | Bangkit (fondasi, soal, kartu), Dila (dashboard, biota, edukasi) |
 
 ## 9. Cara mengubah kontrak
 1. Buka PR di repo backend yang mengubah dokumen ini (dan koleksi Postman bila perlu).

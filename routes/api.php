@@ -21,7 +21,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/auth/logout', [AuthController::class, 'logout']);
     });
 
-    // ---- Publik (Dillakuusayang) ----
+    // ---- Publik (Dila) ----
     Route::get('/biota', [BiotaController::class, 'index']);
     Route::get('/biota/kategori', [BiotaController::class, 'kategori']);
     Route::get('/biota/{biota:slug}', [BiotaController::class, 'show']);
@@ -30,7 +30,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/beranda', [BerandaController::class, 'index']);
     Route::get('/leaderboard', [LeaderboardController::class, 'index']);
 
-    // ---- Pengguna: kuis, dashboard, koleksi, profil (Bangkit) ----
+    // ---- Pengguna: kuis, dashboard, koleksi, profil (Bangkit dan Dila) ----
     Route::middleware('auth:sanctum')->group(function () {
         // Pembatas laju 'kuis' (60 permintaan per menit per pengguna) didefinisikan di AppServiceProvider
         Route::middleware('throttle:kuis')->group(function () {
@@ -39,13 +39,22 @@ Route::prefix('v1')->group(function () {
             Route::post('/kuis/{game}/selesai', [KuisController::class, 'selesai']);
         });
 
-        // ---- Admin (Dillakuusayang) ----
-
         // dashboard (Dila, D4b)
         Route::get('/dashboard', [DashboardController::class, 'index']);
 
         // koleksi dan profil (Bangkit, B6 dan B7)
         Route::get('/koleksi', [KoleksiController::class, 'index']);
         Route::put('/profil', [ProfilController::class, 'update']);
+    });
+
+    // ---- Admin (Dila dan Bangkit) ----
+    Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
+        // dashboard (Dila, D6)
+
+        // biota dan edukasi (Dila, D5)
+
+        // soal (Bangkit, B9)
+
+        // kartu (Bangkit, B10)
     });
 });

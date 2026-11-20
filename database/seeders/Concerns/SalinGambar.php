@@ -6,10 +6,7 @@ use Illuminate\Support\Facades\Storage;
 
 trait SalinGambar
 {
-    /**
-     * Salin database/seeders/images/{folder}/{slug}.(jpg|jpeg|png|webp) ke storage publik.
-     * Mengembalikan path relatif, atau null jika file gambarnya belum ada.
-     */
+    /** Salin database/seeders/images/{folder}/{slug}.(jpg|jpeg|png|webp) ke disk gambar. Null bila berkasnya belum ada. */
     protected function salinGambar(string $folder, string $slug): ?string
     {
         foreach (['jpg', 'jpeg', 'png', 'webp'] as $ext) {
@@ -17,7 +14,7 @@ trait SalinGambar
 
             if (is_file($sumber)) {
                 $tujuan = "{$folder}/{$slug}.{$ext}";
-                Storage::disk('public')->put($tujuan, file_get_contents($sumber));
+                Storage::disk(config('aquaquest.gambar_disk'))->put($tujuan, file_get_contents($sumber));
 
                 return $tujuan;
             }
