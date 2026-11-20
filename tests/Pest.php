@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 /*
@@ -47,4 +49,21 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+function loginSebagaiAdmin(): User
+{
+    $admin = User::factory()->create(['role' => 'admin']);
+    Sanctum::actingAs($admin);
+
+    return $admin;
+}
+
+/** Login sebagai pengguna biasa. */
+function loginSebagaiUser(): User
+{
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+
+    return $user;
 }
