@@ -30,7 +30,7 @@ class PenggunaSeeder extends Seeder
         ];
 
         foreach ($pemain as $i => [$nama, $xp]) {
-            $this->buat($nama, 'pemain'.($i + 1).'@aquaquest.test', 'user', $xp);
+            $this->buat($nama, 'pemain' . ($i + 1) . '@aquaquest.test', 'user', $xp);
         }
     }
 
@@ -40,7 +40,7 @@ class PenggunaSeeder extends Seeder
         $user = User::firstOrNew(['email' => $email]);
         $user->forceFill([
             'name' => $nama,
-            'password' => Hash::make('password'),
+            'password' => Hash::make(config('aquaquest.seed_password')),
             'role' => $role,
             'total_xp' => $xp,
             'level' => app(LevelService::class)->hitungLevel($xp),
