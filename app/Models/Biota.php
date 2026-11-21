@@ -6,6 +6,7 @@ use App\Models\Concerns\HasGambarUrl;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Biota extends Model
 {
@@ -40,5 +41,10 @@ class Biota extends Model
     public function kontenEdukasi(): HasMany
     {
         return $this->hasMany(KontenEdukasi::class, 'biota_id');  // foreign key di tabel konten_edukasi
+    }
+
+    public function kartu(): HasOne
+    {
+        return $this->hasOne(Kartu::class, 'biota_id');
     }
 }

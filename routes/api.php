@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\BiotaAdminController;
+use App\Http\Controllers\Api\Admin\EdukasiAdminController;
 use App\Http\Controllers\Api\Admin\SoalAdminController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BerandaController;
@@ -53,6 +55,18 @@ Route::prefix('v1')->group(function () {
         // dashboard (Dila, D6)
 
         // biota dan edukasi (Dila, D5)
+        Route::get('/biota', [BiotaAdminController::class, 'index']);
+        Route::get('/biota/opsi', [BiotaAdminController::class, 'opsi']);   // WAJIB sebelum /biota/{biota:id}
+        Route::post('/biota', [BiotaAdminController::class, 'store']);
+        Route::get('/biota/{biota:id}', [BiotaAdminController::class, 'show']);
+        Route::put('/biota/{biota:id}', [BiotaAdminController::class, 'update']);   // dengan file: POST + _method=PUT
+        Route::delete('/biota/{biota:id}', [BiotaAdminController::class, 'destroy']);
+
+        Route::get('/edukasi', [EdukasiAdminController::class, 'index']);
+        Route::post('/edukasi', [EdukasiAdminController::class, 'store']);
+        Route::get('/edukasi/{konten:id}', [EdukasiAdminController::class, 'show']);
+        Route::put('/edukasi/{konten:id}', [EdukasiAdminController::class, 'update']);
+        Route::delete('/edukasi/{konten:id}', [EdukasiAdminController::class, 'destroy']);
 
         // soal (Bangkit, B9)
         Route::get('/soal', [SoalAdminController::class, 'index']);
