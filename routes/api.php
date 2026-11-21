@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Admin\BiotaAdminController;
+use App\Http\Controllers\Api\Admin\DashboardAdminController;
 use App\Http\Controllers\Api\Admin\EdukasiAdminController;
 use App\Http\Controllers\Api\Admin\SoalAdminController;
 use App\Http\Controllers\Api\AuthController;
@@ -53,6 +54,7 @@ Route::prefix('v1')->group(function () {
     // ---- Admin (Dila dan Bangkit) ----
     Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
         // dashboard (Dila, D6)
+        Route::get('/dashboard', [DashboardAdminController::class, 'index']);
 
         // biota dan edukasi (Dila, D5)
         Route::get('/biota', [BiotaAdminController::class, 'index']);
