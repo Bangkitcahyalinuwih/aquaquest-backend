@@ -40,7 +40,7 @@ class PenggunaSeeder extends Seeder
         $user = User::firstOrNew(['email' => $email]);
         $user->forceFill([
             'name' => $nama,
-            'password' => Hash::make('password'),
+            'password' => Hash::make(config('aquaquest.seed_password')),
             'role' => $role,
             'total_xp' => $xp,
             'level' => app(LevelService::class)->hitungLevel($xp),
