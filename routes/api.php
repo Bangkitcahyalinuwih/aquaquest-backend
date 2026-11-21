@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\SoalAdminController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BerandaController;
 use App\Http\Controllers\Api\BiotaController;
@@ -54,6 +55,11 @@ Route::prefix('v1')->group(function () {
         // biota dan edukasi (Dila, D5)
 
         // soal (Bangkit, B9)
+        Route::get('/soal', [SoalAdminController::class, 'index']);
+        Route::post('/soal', [SoalAdminController::class, 'store']);
+        Route::get('/soal/{soal:id}', [SoalAdminController::class, 'show']);
+        Route::put('/soal/{soal:id}', [SoalAdminController::class, 'update']);   // klien dengan file: POST + _method=PUT
+        Route::delete('/soal/{soal:id}', [SoalAdminController::class, 'destroy']);
 
         // kartu (Bangkit, B10)
     });
