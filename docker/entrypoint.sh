@@ -43,7 +43,6 @@ if [ "$1" = "apache2-foreground" ]; then
     php artisan config:cache
     php artisan route:cache || echo "[entrypoint] route:cache dilewati."
 
-    chown -R www-data:www-data /tmp/storage /tmp/bootstrap/cache
 fi
 
 exec "$@"
