@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Admin\BiotaAdminController;
 use App\Http\Controllers\Api\Admin\DashboardAdminController;
 use App\Http\Controllers\Api\Admin\EdukasiAdminController;
+use App\Http\Controllers\Api\Admin\KartuAdminController;
 use App\Http\Controllers\Api\Admin\SoalAdminController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BerandaController;
@@ -78,5 +79,10 @@ Route::prefix('v1')->group(function () {
         Route::delete('/soal/{soal:id}', [SoalAdminController::class, 'destroy']);
 
         // kartu (Bangkit, B10)
+        Route::get('/kartu', [KartuAdminController::class, 'index']);
+        Route::post('/kartu', [KartuAdminController::class, 'store']);
+        Route::get('/kartu/{kartu:id}', [KartuAdminController::class, 'show']);
+        Route::put('/kartu/{kartu:id}', [KartuAdminController::class, 'update']);
+        Route::delete('/kartu/{kartu:id}', [KartuAdminController::class, 'destroy']);
     });
 });
