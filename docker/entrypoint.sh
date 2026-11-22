@@ -20,7 +20,7 @@ if [ "$1" = "apache2-foreground" ]; then
              /tmp/storage/app/public \
              /tmp/bootstrap/cache
 
-    cp -rn /opt/storage-public/. /tmp/storage/app/public/ 2>/dev/null || true
+  cp -rn /var/www/html/database/seeders/images/. /tmp/storage/app/public/ 2>/dev/null || true
 
     if [ "${AUTO_MIGRATE:-true}" = "true" ]; then
         echo "[entrypoint] menjalankan migrasi database..."
