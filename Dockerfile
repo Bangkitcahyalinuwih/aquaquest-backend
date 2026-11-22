@@ -38,8 +38,6 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
 ENV PORT=80
 RUN sed -i 's/Listen 80/Listen ${PORT}/g' /etc/apache2/ports.conf \
     && sed -i 's/:80/:${PORT}/g' /etc/apache2/sites-available/000-default.conf \
-    && mkdir -p /opt/storage-public \
-    && cp -r /var/www/html/storage/app/public/. /opt/storage-public/ 2>/dev/null || true \
     && rm -rf /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/storage \
     && ln -s /tmp/storage /var/www/html/storage \
     && ln -s /tmp/bootstrap/cache /var/www/html/bootstrap/cache \
