@@ -13,12 +13,14 @@ if [ "$1" = "apache2-foreground" ]; then
     export PORT="${PORT:-80}"
 
     # Buat direktori writable di /tmp (target symlink dari storage & bootstrap/cache)
-    mkdir -p /tmp/storage/framework/cache/data \
+   mkdir -p /tmp/storage/framework/cache/data \
              /tmp/storage/framework/sessions \
              /tmp/storage/framework/views \
              /tmp/storage/logs \
              /tmp/storage/app/public \
              /tmp/bootstrap/cache
+
+    cp -rn /opt/storage-public/. /tmp/storage/app/public/ 2>/dev/null || true
 
     if [ "${AUTO_MIGRATE:-true}" = "true" ]; then
         echo "[entrypoint] menjalankan migrasi database..."
@@ -42,7 +44,7 @@ if [ "$1" = "apache2-foreground" ]; then
 
     php artisan config:cache
     php artisan route:cache || echo "[entrypoint] route:cache dilewati."
-    
+
     mkdir -p /tmp/apache2/lock
     chmod -R 775 /tmp/storage /tmp/bootstrap/cache /tmp/apache2 2>/dev/null || true
 fi
