@@ -35,5 +35,13 @@ EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
     CMD curl -fsS http://localhost:${PORT:-80}/up || exit 1
 
+ENV PORT=80
+RUN sed -i 's/Listen 80/Listen ${PORT}/g' /etc/apache2/ports.conf \
+    && sed -i 's/:80/:${PORT}/g' /etc/apache2/sites-available/000-default.conf \
+    && rm -rf /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/storage \
+    && ln -s /tmp/storage /var/www/html/storage \
+    && ln -s /tmp/bootstrap/cache /var/www/html/bootstrap/cache \
+    && ln -s /tmp/storage/app/public /var/www/html/public/storage
+
 ENTRYPOINT ["entrypoint"]
 CMD ["apache2-foreground"]

@@ -10,13 +10,15 @@ if [ "$1" = "apache2-foreground" ]; then
         exit 1
     fi
 
-    # Banyak layanan hosting memberi nomor port lewat variabel PORT. Apache disetel mengikutinya (bawaan: 80).
-    PORT="${PORT:-80}"
-    sed -i "s/Listen 80/Listen ${PORT}/" /etc/apache2/ports.conf
-    sed -i "s/<VirtualHost \*:80>/<VirtualHost *:${PORT}>/" /etc/apache2/sites-available/000-default.conf
+    export PORT="${PORT:-80}"
 
-    mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs storage/app/public
-    php artisan storage:link --force >/dev/null 2>&1 || true
+    # Buat direktori writable di /tmp (target symlink dari storage & bootstrap/cache)
+    mkdir -p /tmp/storage/framework/cache/data \
+             /tmp/storage/framework/sessions \
+             /tmp/storage/framework/views \
+             /tmp/storage/logs \
+             /tmp/storage/app/public \
+             /tmp/bootstrap/cache
 
     if [ "${AUTO_MIGRATE:-true}" = "true" ]; then
         echo "[entrypoint] menjalankan migrasi database..."
@@ -41,7 +43,7 @@ if [ "$1" = "apache2-foreground" ]; then
     php artisan config:cache
     php artisan route:cache || echo "[entrypoint] route:cache dilewati."
 
-    chown -R www-data:www-data storage bootstrap/cache
+    chown -R www-data:www-data /tmp/storage /tmp/bootstrap/cache
 fi
 
 exec "$@"
