@@ -42,7 +42,9 @@ if [ "$1" = "apache2-foreground" ]; then
 
     php artisan config:cache
     php artisan route:cache || echo "[entrypoint] route:cache dilewati."
-
+    
+    mkdir -p /tmp/apache2/lock
+    chmod -R 775 /tmp/storage /tmp/bootstrap/cache /tmp/apache2 2>/dev/null || true
 fi
 
 exec "$@"

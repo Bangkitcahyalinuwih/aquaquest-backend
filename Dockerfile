@@ -42,6 +42,9 @@ RUN sed -i 's/Listen 80/Listen ${PORT}/g' /etc/apache2/ports.conf \
     && ln -s /tmp/storage /var/www/html/storage \
     && ln -s /tmp/bootstrap/cache /var/www/html/bootstrap/cache \
     && ln -s /tmp/storage/app/public /var/www/html/public/storage
+    
+RUN sed -i 's|/var/run/apache2|/tmp/apache2|g' /etc/apache2/envvars \
+    && sed -i 's|/var/lock/apache2|/tmp/apache2/lock|g' /etc/apache2/envvars
 
 ENTRYPOINT ["entrypoint"]
 CMD ["apache2-foreground"]
